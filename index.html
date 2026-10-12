@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#080d18">
+<title>SryModz | PS5 Toolkit</title>
+<style>
+:root {
+  --bg: #080d18;
+  --panel: #101a2b;
+  --panel2: #142239;
+  --blue: #1687ff;
+  --cyan: #32d8ff;
+  --text: #f2f7ff;
+  --muted: #9eafc9;
+  --border: rgba(109,170,255,.2);
+  --red: #ff6b79;
+  --green: #54e3ae;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse at 75% 0%, #10305c 0%, transparent 45%),
+    var(--bg);
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
+}
+button, input { font: inherit; }
+button, a { -webkit-tap-highlight-color: transparent; }
+header {
+  min-height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 5%;
+  border-bottom: 1px solid var(--border);
+  background: rgba(5,10,20,.8);
+}
+.brand {
+  font-size: 21px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+}
+.brand span { color: var(--cyan); }
+.header-status {
+  color: var(--green);
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+.layout {
+  display: grid;
+  grid-template-columns: 220px minmax(0,1fr);
+  gap: 24px;
+  max-width: 1250px;
+  margin: auto;
+  padding: 26px 4%;
+}
+nav, .panel, .project-card {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: rgba(16,26,43,.9);
+}
+nav {
+  padding: 14px;
+  align-self: start;
+  position: sticky;
+  top: 15px;
+}
+.nav-label {
+  color: var(--muted);
+  font-size: 11px;
+  letter-spacing: 2px;
+  padding: 12px 10px;
+}
+.nav-btn {
+  width: 100%;
+  text-align: left;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  padding: 14px 12px;
+  border-radius: 9px;
+  cursor: pointer;
+  margin-bottom: 5px;
+}
+.nav-btn.active, .nav-btn:hover {
+  color: white;
+  background: linear-gradient(90deg, #1265c7, #12345d);
+}
+main { min-width: 0; }
+.hero {
+  padding: 30px;
+  margin-bottom: 20px;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background:
+    radial-gradient(ellipse at 100% 0%, rgba(27,130,255,.23), transparent 60%),
+    var(--panel);
+}
+.eyebrow {
+  color: var(--cyan);
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 3px;
+}
+h1 {
+  font-size: clamp(29px, 5vw, 48px);
+  margin: 12px 0;
+  letter-spacing: -1px;
+}
+h2 { font-size: 21px; margin-top: 0; }
+h3 { margin-top: 0; }
+p {
+  line-height: 1.65;
+  color: var(--muted);
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+.panel, .project-card { padding: 22px; }
+.metric {
+  font-size: 28px;
+  font-weight: 800;
+  margin: 10px 0;
+}
+.small {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+.badge {
+  display: inline-block;
+  padding: 7px 10px;
+  border-radius: 7px;
+  background: rgba(255,107,121,.12);
+  color: var(--red);
+  border: 1px solid rgba(255,107,121,.25);
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: .5px;
+}
+.badge.info {
+  background: rgba(50,216,255,.1);
+  color: var(--cyan);
+  border-color: rgba(50,216,255,.2);
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  border: 1px solid var(--border);
+  color: white;
+  background: #172b47;
+  padding: 12px 15px;
+  border-radius: 9px;
+  cursor: pointer;
+  margin-top: 10px;
+  margin-right: 6px;
+}
+.btn.primary {
+  background: linear-gradient(100deg, #0878ed, #0756ad);
+  border-color: #238fff;
+}
+.btn:hover { filter: brightness(1.15); }
+input {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  color: white;
+  background: #091323;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  margin: 12px 0;
+}
+.section { display: none; }
+.section.active { display: block; }
+.notice {
+  border-left: 3px solid var(--cyan);
+  padding: 14px 16px;
+  background: rgba(50,216,255,.06);
+  border-radius: 0 9px 9px 0;
+  margin-top: 15px;
+  color: #c7e9ff;
+  line-height: 1.6;
+}
+footer {
+  text-align: center;
+  padding: 28px 12px;
+  color: #788da9;
+  font-size: 11px;
+  border-top: 1px solid var(--border);
+}
+@media(max-width:720px) {
+  .layout { grid-template-columns: 1fr; padding: 16px; }
+  nav { position: static; }
+  .nav-items {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 5px;
+  }
+  .grid { grid-template-columns: 1fr; }
+  .hero { padding: 23px; }
+  header { padding: 16px; }
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">SRYMODZ <span>PS5</span></div>
+  <div class="header-status">● TOOLKIT ONLINE</div>
+</header>
+<div class="layout">
+  <nav>
+    <div class="nav-label">MAIN MENU</div>
+    <div class="nav-items">
+      <button class="nav-btn active" data-page="dashboard">⌂ Dashboard</button>
+      <button class="nav-btn" data-page="firmware">▤ Firmware Check</button>
+      <button class="nav-btn" data-page="hen">◇ PS5-HEN</button>
+      <button class="nav-btn" data-page="umtx">⌘ UMTX</button>
+      <button class="nav-btn" data-page="about">ⓘ Informationen</button>
+    </div>
+  </nav>
+  <main>
+    <section id="dashboard" class="section active">
+      <div class="hero">
+        <div class="eyebrow">PLAYSTATION 5 · RESEARCH TOOLKIT</div>
+        <h1>PS5 Toolkit<span style="color:var(--cyan)">.</span></h1>
+        <p>
+          Eine kompakte Übersicht über Firmware, Homebrew-Projekte
+          und deren dokumentierte Voraussetzungen.
+        </p>
+        <span class="badge">KEIN EXPLOIT AUSGEFÜHRT</span>
+      </div>
+      <div class="grid">
+        <div class="panel">
+          <div class="small">DEINE FIRMWARE</div>
+          <div class="metric" id="dashboardFirmware">14.10</div>
+          <div class="small">Manuell eingestellter Wert</div>
+        </div>
+        <div class="panel">
+          <div class="small">KOMPATIBILITÄT</div>
+          <div class="metric" style="color:var(--red)">Nicht bestätigt</div>
+          <div class="small">Kein passender Homebrew-Weg belegt</div>
+        </div>
+      </div>
+      <div class="grid">
+        <div class="project-card">
+          <div class="eyebrow">PROJECT 01</div>
+          <h2>PS5-HEN</h2>
+          <p>Homebrew-Enabler-Projekt für unterstützte PS5-Firmwareversionen.</p>
+          <span class="badge">14.10 nicht bestätigt</span><br>
+          <a class="btn primary"
+             href="https://github.com/cragson/ps5-hen"
+             target="_blank" rel="noopener noreferrer">
+             Offizielles Repository ↗
+          </a>
+        </div>
+        <div class="project-card">
+          <div class="eyebrow">PROJECT 02</div>
+          <h2>UMTX</h2>
+          <p>Exploit-Forschungsprojekt mit spezifischen Firmware-Voraussetzungen.</p>
+          <span class="badge">14.10 nicht unterstützt</span><br>
+          <a class="btn primary"
+             href="https://github.com/PS5Dev/PS5-UMTX-Jailbreak"
+             target="_blank" rel="noopener noreferrer">
+             Offizielles Repository ↗
+          </a>
+        </div>
+      </div>
+      <div class="notice">
+        <strong>Wichtig:</strong> Dieses Dashboard zeigt Informationen an.
+        Es verbindet sich nicht mit dem PS5-System, führt keine Payloads
+        aus und installiert keinen Jailbreak.
+      </div>
+    </section>
+    <section id="firmware" class="section">
+      <div class="hero">
+        <div class="eyebrow">SYSTEM INFORMATION</div>
+        <h1>Firmware Check</h1>
+        <p>Trage die angezeigte Systemsoftware-Version ein.</p>
+      </div>
+      <div class="panel">
+        <label for="firmwareInput">Firmware-Version</label>
+        <input id="firmwareInput" value="14.10"
+               maxlength="30" autocomplete="off"
+               placeholder="z. B. 4.51 oder 14.10">
+        <button class="btn primary" id="checkButton">
+          Version prüfen
+        </button>
+        <div id="firmwareResult" class="notice" aria-live="polite">
+          Die Prüfung ist eine einfache Anzeige und keine
+          automatische Exploit-Erkennung.
+        </div>
+      </div>
+    </section>
+    <section id="hen" class="section">
+      <div class="hero">
+        <div class="eyebrow">PROJECT INFORMATION</div>
+        <h1>PS5-HEN</h1>
+        <p>Homebrew-Enabler-Forschung für ausgewählte Firmwareversionen.</p>
+      </div>
+      <div class="panel">
+        <h2>Projektstatus</h2>
+        <p>
+          PS5-HEN ist kein universeller Installer. Die tatsächliche
+          Nutzbarkeit hängt von der Firmware und einem passenden
+          Einstiegspunkt ab.
+        </p>
+        <span class="badge">FIRMWARE 14.10: NICHT BESTÄTIGT</span>
+        <p class="small">
+          Die Webseite kann die Konsole nicht selbst kompatibel machen.
+        </p>
+        <a class="btn primary"
+           href="https://github.com/cragson/ps5-hen"
+           target="_blank" rel="noopener noreferrer">
+          README auf GitHub öffnen ↗
+        </a>
+      </div>
+    </section>
+    <section id="umtx" class="section">
+      <div class="hero">
+        <div class="eyebrow">EXPLOIT RESEARCH</div>
+        <h1>UMTX</h1>
+        <p>Technische Informationen und Verweise auf das Projekt.</p>
+      </div>
+      <div class="panel">
+        <h2>Voraussetzungen</h2>
+        <p>
+          Ein Exploit ist nur auf den Firmwareversionen nutzbar,
+          die das konkrete Projekt tatsächlich unterstützt.
+          Ein Browser-Menü allein ist kein Exploit.
+        </p>
+        <span class="badge">KEIN PAYLOAD-STARTER</span>
+        <p class="small">
+          Diese Seite sendet keine Exploit-Daten an deine PS5.
+        </p>
+        <a class="btn primary"
+           href="https://github.com/PS5Dev/PS5-UMTX-Jailbreak"
+           target="_blank" rel="noopener noreferrer">
+          Repository öffnen ↗
+        </a>
+      </div>
+    </section>
+    <section id="about" class="section">
+      <div class="hero">
+        <div class="eyebrow">ABOUT THIS TOOL</div>
+        <h1>Informationen</h1>
+        <p>SryModz PS5 Toolkit · Browser-Ausgabe</p>
+      </div>
+      <div class="panel">
+        <h2>Was diese App kann</h2>
+        <p>✓ Firmware-Version manuell anzeigen</p>
+        <p>✓ Projektinformationen darstellen</p>
+        <p>✓ Offizielle Repository-Seiten öffnen</p>
+        <p>✓ Auf dem PS5-Browser und auf Mobilgeräten laufen</p>
+        <h2 style="margin-top:26px">Was diese App nicht kann</h2>
+        <p>✕ Einen Jailbreak installieren</p>
+        <p>✕ PS5-Systemdateien verändern</p>
+        <p>✕ Payloads oder Kernel-Exploits ausführen</p>
+        <p>✕ GTA-Online-Geld, Rang oder Waffen ändern</p>
+      </div>
+    </section>
+  </main>
+</div>
+<footer>
+  SRYMODZ PS5 TOOLKIT · INFORMATIONAL INTERFACE ONLY<br>
+  Kein offizielles Sony-Produkt und nicht mit Sony Interactive Entertainment verbunden.
+</footer>
+<script>
+(function () {
+  "use strict";
+  const buttons = document.querySelectorAll(".nav-btn");
+  const sections = document.querySelectorAll(".section");
+  buttons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      buttons.forEach(function (item) {
+        item.classList.remove("active");
+      });
+      sections.forEach(function (section) {
+        section.classList.remove("active");
+      });
+      button.classList.add("active");
+      const page = document.getElementById(button.dataset.page);
+      if (page) page.classList.add("active");
+    });
+  });
+  const firmwareInput = document.getElementById("firmwareInput");
+  const firmwareResult = document.getElementById("firmwareResult");
+  const dashboardFirmware = document.getElementById("dashboardFirmware");
+  function checkFirmware() {
+    const version = firmwareInput.value.trim();
+    if (!version) {
+      firmwareResult.textContent = "Bitte gib eine Firmware-Version ein.";
+      return;
+    }
+    dashboardFirmware.textContent = version;
+    firmwareResult.textContent =
+      "Eingegebene Version: " + version +
+      ". Diese Demo prüft nicht automatisch, ob ein Exploit verfügbar ist. " +
+      "Bitte kontrolliere die offizielle Projektdokumentation. " +
+      "Es wurde kein Payload ausgeführt.";
+    firmwareResult.style.borderLeftColor = "var(--cyan)";
+  }
+  document.getElementById("checkButton")
+    .addEventListener("click", checkFirmware);
+  firmwareInput.addEventListener("keydown", function (event) {
+    if (event.key === "Enter") checkFirmware();
+  });
+})();
+</script>
+</body>
+</html>
